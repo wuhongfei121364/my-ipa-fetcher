@@ -1,0 +1,22 @@
+name: Download Decrypted IPA
+
+on:
+  workflow_dispatch: # 允许你手动点击按钮触发运行
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download IPA using level3tjg action
+        uses: level3tjg/decryptedappstore-action@main
+        with:
+          # 这里填入 ChatGPT 的官方 App Store 链接
+          appstore_url: "https://apps.apple.com/us/app/chatgpt/id6448311069"
+          path: ChatGPT.ipa
+          token: "${{ secrets.SESSION_TOKEN }}"
+
+      - name: Upload IPA to GitHub Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChatGPT-Decrypted-IPA
+          path: ChatGPT.ipa
